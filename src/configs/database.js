@@ -1,0 +1,20 @@
+import pkg from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const { Pool } = pkg;
+
+const pool = new Pool({
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'admin',
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || 'provinces_db',
+});
+
+pool.on('error', (err) => {
+  console.error('Error en la conexión a la base de datos:', err);
+});
+
+export default pool;
