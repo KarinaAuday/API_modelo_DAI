@@ -5,7 +5,10 @@ export class ProvinceRepository {
   // Obtener todas las provincias
   static async getAll() {
     try {
+      console.log('📊 [ProvinceRepository.getAll] Ejecutando query...');
       const result = await pool.query('SELECT * FROM provinces ORDER BY display_order ASC');
+      console.log(`✅ [ProvinceRepository.getAll] Query completada. Filas: ${result.rowCount}`);
+      
       return result.rows.map(row => new Province(
         row.id,
         row.name,
@@ -15,6 +18,7 @@ export class ProvinceRepository {
         row.display_order
       ));
     } catch (error) {
+      console.error('❌ [ProvinceRepository.getAll] Error:', error.message);
       throw new Error(`Error al obtener provincias: ${error.message}`);
     }
   }

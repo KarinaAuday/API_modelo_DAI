@@ -1,77 +1,151 @@
-# Node.js Project
+# API Modelo DAI - Node.js + React
 
-A simple Node.js project with Express.js server.
+Proyecto full-stack con API REST en Node.js/Express y cliente React para gestionar Provincias, Cursos y Alumnos.
+
+## Estructura del Proyecto
+
+```
+DAI - TP/
+├── src/                      # Backend - API Node.js
+│   ├── configs/             # Configuración de BD
+│   ├── controllers/         # Controladores (endpoints)
+│   ├── entities/            # Modelos de datos
+│   ├── helpers/             # Funciones de validación
+│   ├── repositories/        # Acceso a datos
+│   ├── services/            # Lógica de negocio
+│   └── index.js            # Entry point del servidor
+├── client/                   # Frontend - React + Vite
+│   ├── src/
+│   │   ├── pages/          # Componentes principales
+│   │   ├── App.jsx         # Componente raíz
+│   │   └── main.jsx        # Entry point React
+│   ├── package.json
+│   └── vite.config.js
+├── database.sql            # Script de BD
+├── package.json            # Dependencias backend
+└── README.md
+```
 
 ## Prerequisites
 
-- Node.js 16.x or higher
-- npm 7.x or higher
+- Node.js 16.x o superior
+- npm 7.x o superior
+- PostgreSQL 12.x o superior
 
-## Installation
+## Instalación
 
-1. Clone or download this project
-2. Navigate to the project directory
-3. Install dependencies:
+### Backend
 
 ```bash
 npm install
 ```
 
-## Running the Project
-
-### Development Mode
+### Frontend
 
 ```bash
-npm run dev
+cd client
+npm install
 ```
 
-This will run the server with hot reload using nodemon.
+## Configuración de Base de Datos
 
-### Production Mode
+1. Crear la base de datos:
+```bash
+$env:PGPASSWORD='root'; & 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -U postgres -c 'CREATE DATABASE provinces_db;'
+```
+
+2. Ejecutar el script SQL:
+```bash
+$env:PGPASSWORD='root'; & 'C:\Program Files\PostgreSQL\16\bin\psql.exe' -U postgres -d provinces_db -f 'database.sql'
+```
+
+## Ejecución
+
+### Terminal 1 - Backend (Puerto 3000)
 
 ```bash
 npm start
 ```
 
-The server will start on `http://localhost:3000` by default.
-
-## Project Structure
-
-```
-├── src/
-│   └── index.js          # Main application entry point
-├── package.json          # Project dependencies and scripts
-├── .env.example         # Environment variables template
-├── .gitignore           # Git ignore rules
-└── README.md            # This file
+O con hot reload:
+```bash
+npm run dev
 ```
 
-## Available Endpoints
+### Terminal 2 - Frontend (Puerto 5173)
 
-- `GET /` - Welcome message
-- `GET /api/health` - Health check endpoint
+```bash
+cd client
+npm run dev
+```
 
-## Environment Variables
+Luego accede a: `http://localhost:5173`
 
-Create a `.env` file in the root directory based on `.env.example`:
+## API Endpoints
 
+### Provincias
+- `GET /api/province` - Obtener todas
+- `GET /api/province/{id}` - Obtener por ID
+- `POST /api/province` - Crear
+- `PUT /api/province` - Actualizar
+- `DELETE /api/province/{id}` - Eliminar
+
+### Cursos
+- `GET /api/cursos` - Obtener todos
+- `POST /api/cursos` - Crear nuevo
+
+### Alumnos
+- `GET /api/alumnos` - Obtener todos
+- `POST /api/alumnos` - Crear nuevo
+
+## Variables de Entorno
+
+Crear `.env` en la raíz:
 ```
 PORT=3000
 NODE_ENV=development
+DB_USER=postgres
+DB_PASSWORD=root
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=provinces_db
 ```
 
-## Development
+## Validaciones Implementadas
 
-### Adding Dependencies
+- Nombre y full_name: mínimo 3 caracteres
+- Coordenadas: latitude (-90 a 90), longitude (-180 a 180)
+- Display order: debe ser mayor a 0
+- Nombres de alumnos: mínimo 3 caracteres
+
+## Stack Tecnológico
+
+**Backend:**
+- Express.js 4.x
+- PostgreSQL
+- Axios
+- http-status-codes
+- CORS
+- dotenv
+
+**Frontend:**
+- React 18.x
+- Vite
+- Axios
+
+## Desarrollo
+
+### Agregar dependencias backend
 
 ```bash
 npm install <package-name>
 ```
 
-### Adding Dev Dependencies
+### Agregar dependencias frontend
 
 ```bash
-npm install --save-dev <package-name>
+cd client
+npm install <package-name>
 ```
 
 ## License

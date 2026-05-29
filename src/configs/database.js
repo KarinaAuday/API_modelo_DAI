@@ -13,8 +13,18 @@ const pool = new Pool({
   database: process.env.DB_NAME || 'provinces_db',
 });
 
+console.log('🔗 [Database] Configuración:');
+console.log(`   User: ${process.env.DB_USER}`);
+console.log(`   Host: ${process.env.DB_HOST}`);
+console.log(`   Port: ${process.env.DB_PORT}`);
+console.log(`   Database: ${process.env.DB_NAME}`);
+
+pool.on('connect', () => {
+  console.log('✅ [Database] Conexión establecida');
+});
+
 pool.on('error', (err) => {
-  console.error('Error en la conexión a la base de datos:', err);
+  console.error('❌ [Database] Error:', err.message);
 });
 
 export default pool;

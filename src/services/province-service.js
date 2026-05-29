@@ -39,8 +39,12 @@ export class ProvinceService {
   // Obtener todas las provincias
   static async getAll() {
     try {
-      return await ProvinceRepository.getAll();
+      console.log('🔍 [ProvinceService.getAll] Iniciando servicio...');
+      const provinces = await ProvinceRepository.getAll();
+      console.log(`✅ [ProvinceService.getAll] Se obtuvieron ${provinces.length} provincias`);
+      return provinces;
     } catch (error) {
+      console.error('❌ [ProvinceService.getAll] Error en servicio:', error.message);
       throw error;
     }
   }

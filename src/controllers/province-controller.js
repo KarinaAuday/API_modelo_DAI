@@ -7,13 +7,24 @@ const router = Router();
 // GET /api/province - Obtener todas las provincias
 router.get('/', async (req, res) => {
   try {
+    console.log('\n========== REQUEST: GET /api/province ==========');
+    console.log(`📍 Timestamp: ${new Date().toISOString()}`);
+    console.log(`📋 Headers: ${JSON.stringify(req.headers, null, 2)}`);
+    
     const provinces = await ProvinceService.getAll();
+    
+    console.log(`✅ Response preparada. Total provincias: ${provinces.length}`);
+    console.log('========== RESPONSE 200 OK ==========\n');
+    
     res.status(StatusCodes.OK).json({
       status: StatusCodes.OK,
       statusText: getReasonPhrase(StatusCodes.OK),
       data: provinces
     });
   } catch (error) {
+    console.error('❌ ERROR EN GET /api/province:', error.message);
+    console.log('========== RESPONSE 500 ERROR ==========\n');
+    
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       status: StatusCodes.INTERNAL_SERVER_ERROR,
       statusText: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
